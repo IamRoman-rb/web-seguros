@@ -1,0 +1,61 @@
+@import url('./index.css');
+
+.monopatin{
+    width: 100vw;
+    height: 70vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background-image: url('../Assets/monopatin.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+@media screen and (min-width: 768px){
+    .monopatin{
+        height: 120vh;
+        background-position: 100% 25%;
+    }
+}
+
+.monopatin::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.monopatin > h2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row wrap;
+    padding: .5rem 1rem;
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5rem;
+    text-align: center;
+    color: var(--bright-snow);
+    font-weight: 500;
+    font-size: 1.3rem;
+    gap: .5rem;
+}
+
+.monopatin > .scooterIcon{
+    z-index: 1;
+    color: var(--bright-snow);
+    text-align: center;
+}
+
+@media screen and (min-width: 768px){
+    .monopatin > h2{
+        font-size: 1.8rem;
+    }
+}

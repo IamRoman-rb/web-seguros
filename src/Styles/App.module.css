@@ -1,0 +1,15 @@
+@import url('./index.css');
+
+body{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    font-family: var(--primary-tipography);
+    background-color: var(--bright-snow);
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

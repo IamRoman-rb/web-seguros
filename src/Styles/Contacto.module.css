@@ -1,0 +1,78 @@
+@import url('./index.css');
+
+.contacto{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.contacto h2{
+    color: var(--cobalt-blue);
+    font-size: 2rem;
+    text-align: center;
+}
+.contacto p{
+    color: var(--carbon-black);
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+.listadoContacto{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+@media screen and (min-width: 768px) {
+    .listadoContacto{
+        flex-flow: row wrap;
+    }
+}
+
+.office{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid var(--pale-slate);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media screen and (min-width: 768px) {
+    .office{
+        width: 30%;
+    }
+    
+}
+
+.office h3{
+    display: flex;
+    align-items: center;
+    color: var(--cobalt-blue);
+    font-size: 1.5rem;
+    text-align: center;
+    gap: .3rem;
+}
+.office p{
+    display: flex;
+    align-items: center;
+    color: var(--carbon-black);
+    font-size: 1rem;
+    text-align: center;
+    gap: .3rem;
+}
+
+.icon{
+    color: var(--cobalt-blue);
+}

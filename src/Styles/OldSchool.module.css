@@ -1,0 +1,70 @@
+@import url('./index.css');
+
+.oldSchool{
+    width: 100vw;
+    height: 50vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    background-image: url('../Assets/fiat600.jpg');
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+@media screen and (min-width: 768px){
+    .oldSchool{
+        height: 100vh;
+    }
+}
+
+.oldSchool::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+}
+
+.oldSchool > h2{
+    z-index: 1;
+    color: var(--bright-snow);
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+@media screen and (min-width: 768px){
+    .oldSchool > h2{
+        font-size: 2.5rem;
+    }
+}
+
+.oldSchool > p{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    z-index: 1;
+    color: var(--bright-snow);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+@media screen and (min-width: 768px){
+    .oldSchool > p{
+        font-size: 2rem;
+    }
+}
+
+.oldSchool > p > .icon{
+    border: .1rem solid var(--bright-snow);
+    border-radius: 50%;
+    padding: .2rem;
+}
