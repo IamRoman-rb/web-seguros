@@ -7,7 +7,6 @@ import Contacto from './Components/Contacto'
 import Monopatin from './Components/Monopatin'
 import OldSchool from './Components/OldSchool'
 import Eventos from './Components/Eventos'
-import Style from './Styles/App.module.css'
 
 function App() {
   return (
