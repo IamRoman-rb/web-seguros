@@ -1,6 +1,6 @@
 import {motion} from 'framer-motion';
 import Style from '../Styles/Contacto.module.css';
-import { IconMailFilled, IconDirections, IconBrandWhatsapp } from '@tabler/icons-react';
+import { IconMailFilled, IconDirections, IconBrandWhatsapp, IconBrandInstagram } from '@tabler/icons-react';
 
 const Contacto = () => {
 
@@ -12,7 +12,7 @@ const Contacto = () => {
         email: "lastoninas@sanfranciscoseguros.com.ar"
     },
     {
-        ubicacion: "Francisco Solano",
+        ubicacion: "San Francisco Solano",
         direccion: "Calle 838 N° 3792",
         telefono: "+54 9 11 2595-7130",
         email: "solano.seguros@sanfranciscoseguros.com.ar"
@@ -39,6 +39,11 @@ const Contacto = () => {
                     </li>
                 ))}
             </ul>
+            <h3 className={Style.tituloSeccion}>También podes encontrarnos en Instagram</h3>
+            <span className={Style.instagram}>
+                <h4>@orgsanfrancisco.seguros</h4>
+                <a href="https://www.instagram.com/orgsanfrancisco.seguros?igsh=Yng0dGY2dnhpcWEx" target='_blank'><IconBrandInstagram stroke={2} size={35}/></a>
+            </span>
 
         </motion.section>
     )

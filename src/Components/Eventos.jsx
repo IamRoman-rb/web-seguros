@@ -3,6 +3,7 @@ import Style from '../Styles/Eventos.module.css';
 import { IconCalendarEvent } from '@tabler/icons-react';
 import FONTANA from '../Assets/FONTANA.mp4';
 import GOLF from '../Assets/GOLF.jpeg';
+import Evento_Golf from '../Assets/Evento Golf.jpeg';
 
 const Eventos = () => {
 
@@ -18,6 +19,12 @@ const Eventos = () => {
             subtitulo: "¡Aceleramos junto a Norberto Fontana en la gran final del TC! 🏁",
             descripcion: "El 7 de diciembre de 2025 el Autódromo Roberto Mouras de La Plata vibró con la definición del Turismo Carretera, y Organización San Francisco estuvo ahí. Nos enorgullece haber acompañado como sponsors a un histórico como Norberto Fontana en esta fecha tan especial. Sabemos que en la pista la velocidad y la precisión lo son todo, y que para acelerar tranquilo necesitás el mejor equipo detrás. Así como en el automovilismo, nosotros somos tu respaldo en el día a día para que avances seguro.",
             imagen: FONTANA
+        },
+        {
+            titulo: "Torneo Aniversario: Golf Club Santa Teresita",
+            subtitulo: "Sábado 28 de Marzo 2026 | 18 Hoyos Medal Play",
+            descripcion: "Organización San Francisco dice presente una vez más para acompañar a los golfistas en este gran desafío. Disfrutá de un entorno increíble y del mejor deporte, sabiendo que tenés el equipo de seguros más confiable de tu lado.",
+            imagen: Evento_Golf
         }
     ]   
 

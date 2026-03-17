@@ -5,8 +5,10 @@ import Coberturas from './Components/Coberturas'
 import Elegirnos from './Components/Elegirnos'
 import Contacto from './Components/Contacto'
 import Monopatin from './Components/Monopatin'
+import Bicicletas from './Components/Bicicletas'
 import OldSchool from './Components/OldSchool'
 import Eventos from './Components/Eventos'
+import Empresas from './Components/Empresas'
 
 function App() {
   return (
@@ -19,6 +21,10 @@ function App() {
         
         <div>
           <Monopatin />
+        </div>
+
+        <div>
+          <Bicicletas />
         </div>
 
         <div id="coberturas">
@@ -39,6 +45,10 @@ function App() {
 
         <div id='eventos'>
           <Eventos />
+        </div>
+
+        <div id='empresas'>
+          <Empresas />
         </div>
 
       </main>

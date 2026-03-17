@@ -1,6 +1,6 @@
 @import url('../index.css');
 
-.contacto{
+.contacto {
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -10,18 +10,20 @@
     padding: 2rem;
 }
 
-.contacto h2{
+.contacto h2,
+.contacto h3 {
     color: var(--cobalt-blue);
     font-size: 2rem;
     text-align: center;
 }
-.contacto p{
+
+.contacto p {
     color: var(--carbon-black);
     font-size: 1.25rem;
     text-align: center;
 }
 
-.listadoContacto{
+.listadoContacto {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -31,12 +33,12 @@
 }
 
 @media screen and (min-width: 768px) {
-    .listadoContacto{
+    .listadoContacto {
         flex-flow: row wrap;
     }
 }
 
-.office{
+.office {
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -50,13 +52,13 @@
 }
 
 @media screen and (min-width: 768px) {
-    .office{
+    .office {
         width: 30%;
     }
-    
+
 }
 
-.office h3{
+.office h3 {
     display: flex;
     align-items: center;
     color: var(--cobalt-blue);
@@ -64,7 +66,8 @@
     text-align: center;
     gap: .3rem;
 }
-.office p{
+
+.office p {
     display: flex;
     align-items: center;
     color: var(--carbon-black);
@@ -73,6 +76,43 @@
     gap: .3rem;
 }
 
-.icon{
+.icon {
     color: var(--cobalt-blue);
+}
+
+.instagram {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid var(--pale-slate);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.instagram h4 {
+    display: flex;
+    align-items: center;
+    color: var(--cobalt-blue);
+    font-size: 1.5rem;
+    text-align: center;
+    gap: .3rem;
+}
+
+.instagram a{
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--pale-slate);
+    background-color: #C13584;
+    border-radius: .3rem;
+    transition: all .3s ease-in-out;
+}
+.instagram a:hover{
+    background-color: #E1306C;
 }

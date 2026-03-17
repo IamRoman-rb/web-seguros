@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 import Style from '../Styles/Footer.module.css';
 import logo from '../Assets/logo.png';
-import fp from '../Assets/fp.png';
-import ma from '../Assets/ma.png';
-import rus from '../Assets/rus.png';
-import agro from '../Assets/agro.png';
 
 const Footer = () => {
     const info = [
@@ -95,12 +91,6 @@ const Footer = () => {
                     </ul>
                 </motion.section>
                 <motion.section variants={sectionVariants} className={Style.sectionPartners}>
-                    <div className={Style.partnerLogos}>
-                        <div className={Style.logoPlaceholder}><img src={fp} alt="" /></div>
-                        <div className={Style.logoPlaceholder}><img src={ma} alt="" /></div>
-                        <div className={Style.logoPlaceholder}><img src={rus} alt="" /></div>
-                        <div className={Style.logoPlaceholder}><img src={agro} alt="" /></div>
-                    </div>
                     <div className={Style.destacados}>
                         {rubrosDestacados.map((rubro, index) => (
                             <h2 key={index}>{rubro}</h2>
