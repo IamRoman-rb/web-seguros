@@ -1,69 +1,72 @@
-import {motion} from 'framer-motion';
-import Style from '../Styles/Eventos.module.css';
-import { IconCalendarEvent } from '@tabler/icons-react';
-import FONTANA from '../Assets/FONTANA.mp4';
-import GOLF from '../Assets/GOLF.jpeg';
-import Evento_Golf from '../Assets/Evento Golf.jpeg';
+import { motion as Motion } from 'framer-motion'
+import { IconCalendarEvent, IconMapPin } from '@tabler/icons-react'
+import { useSiteData } from '../content/SiteDataContext'
 
-const Eventos = () => {
-
-    const eventos = [
-        {
-            titulo: "Torneo de Golf",
-            subtitulo: "¡Gran jornada de golf en Santa Teresita! ⛳",
-            descripcion: "Vivimos un fin de semana a puro deporte y camaradería en la Copa Organización San Francisco. Agradecemos a todos los golfistas que participaron de este gran torneo local y nos acompañaron en una jornada excepcional. Porque así como en el green la precisión lo es todo, en la vida diaria tu tranquilidad es nuestra prioridad. ¡Gracias por confiar en nuestro respaldo!",
-            imagen: GOLF
-        },
-        {
-            titulo: "Final TC 2025",
-            subtitulo: "¡Aceleramos junto a Norberto Fontana en la gran final del TC! 🏁",
-            descripcion: "El 7 de diciembre de 2025 el Autódromo Roberto Mouras de La Plata vibró con la definición del Turismo Carretera, y Organización San Francisco estuvo ahí. Nos enorgullece haber acompañado como sponsors a un histórico como Norberto Fontana en esta fecha tan especial. Sabemos que en la pista la velocidad y la precisión lo son todo, y que para acelerar tranquilo necesitás el mejor equipo detrás. Así como en el automovilismo, nosotros somos tu respaldo en el día a día para que avances seguro.",
-            imagen: FONTANA
-        },
-        {
-            titulo: "Torneo Aniversario: Golf Club Santa Teresita",
-            subtitulo: "Sábado 28 de Marzo 2026 | 18 Hoyos Medal Play",
-            descripcion: "Organización San Francisco dice presente una vez más para acompañar a los golfistas en este gran desafío. Disfrutá de un entorno increíble y del mejor deporte, sabiendo que tenés el equipo de seguros más confiable de tu lado.",
-            imagen: Evento_Golf
-        }
-    ]   
-
-    return (
-        <motion.section className={Style.eventos}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ 
-                once: true, 
-                amount: 0.4
-            }}
-        
-        >
-            <h2>Eventos</h2>
-            <p>Descubre nuestros próximos eventos y actividades diseñados para mantenerte informado, conectado y entretenido. ¡No te pierdas la oportunidad de participar!</p>
-
-            <ul className={Style.listadoEventos}>
-                {eventos.map((evento, index) => (
-                    <li key={index} className={Style.evento}>
-                        <h3><IconCalendarEvent className={Style.icon}/>{evento.titulo}</h3>
-                        <h4>{evento.subtitulo}</h4>
-                        <p>{evento.descripcion}</p>
-                        {   
-                            evento.imagen.split('.').pop().toLowerCase() == 'mp4' ? (
-                                <video controls className={Style.imagenEvento}>
-                                    <source src={evento.imagen} type="video/mp4" />
-                                    Tu navegador no soporta el elemento de video.
-                                </video>
-                            ) : (
-                                <img src={evento.imagen} alt={evento.titulo} className={Style.imagenEvento}/>
-                            )
-                        }
-                    </li>
-                ))}
-            </ul>
-
-        </motion.section>
-    )
+function formatDate(value) {
+  if (!value) return ''
+  try {
+    return new Date(value).toLocaleDateString('es-AR', { day: '2-digit', month: 'long', year: 'numeric' })
+  } catch {
+    return ''
+  }
 }
 
-export default Eventos;
+const Eventos = () => {
+  const { content, events, eventsLoaded } = useSiteData()
+  const { eventos } = content
+
+  return (
+    <section id="eventos" className="w-full py-space-2xl bg-surface-subtle">
+      <div className="max-w-container mx-auto px-margin-mobile md:px-margin">
+        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-space-2xl">
+          <h2 className="font-heading text-headline-lg text-navy-deep mb-space-sm">{eventos?.title}</h2>
+          <p className="font-body text-body-md text-on-surface-variant">{eventos?.subtitle}</p>
+        </div>
+
+        {events.length === 0 && eventsLoaded && (
+          <p className="text-center font-body text-body-md text-on-surface-variant">
+            Próximamente nuevos eventos. ¡Seguinos en Instagram para no perderte ninguno!
+          </p>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+          {events.map((evento, index) => (
+            <Motion.article
+              key={evento.id}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: (index % 3) * 0.08 }}
+              className="bg-surface-card rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col"
+            >
+              {evento.imagen && (
+                <img src={evento.imagen} alt={evento.titulo} className="w-full h-48 object-cover" />
+              )}
+              <div className="p-space-lg flex flex-col gap-2 flex-1">
+                <div className="flex items-center gap-2 text-secondary font-heading text-label-sm uppercase tracking-wide">
+                  <IconCalendarEvent size={18} />
+                  {formatDate(evento.fecha)}
+                </div>
+                <h3 className="font-heading text-title-lg text-navy-deep">{evento.titulo}</h3>
+                {evento.subtitulo && (
+                  <p className="font-heading text-label-md text-secondary">{evento.subtitulo}</p>
+                )}
+                {evento.ubicacion && (
+                  <div className="flex items-center gap-1.5 text-on-surface-variant font-body text-body-sm">
+                    <IconMapPin size={16} />
+                    {evento.ubicacion}
+                  </div>
+                )}
+                {evento.descripcion && (
+                  <p className="font-body text-body-sm text-on-surface-variant mt-1">{evento.descripcion}</p>
+                )}
+              </div>
+            </Motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Eventos

@@ -1,16 +1,89 @@
-# React + Vite
+# Organización San Francisco — Landing + Panel de administración
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Landing page (React + Vite + Tailwind) con un backend propio (Node + Express) que permite,
+desde un panel privado en `/admin`, cargar eventos (imagen, título, descripción y ubicación)
+y editar los textos, títulos e imágenes de la página sin tocar código.
 
-Currently, two official plugins are available:
+## Estructura
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- `src/` — Landing page y panel de administración (React, Tailwind).
+- `server/` — API (Express). Guarda los datos en `server/data/db.json` y las imágenes
+  subidas en `server/data/uploads/` (esta carpeta se genera sola, no se versiona en git).
+- `public/` — Imágenes estáticas de referencia (logo, fotos por defecto).
 
-## React Compiler
+## Requisitos
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js 20 o superior.
 
-## Expanding the ESLint configuration
+## Desarrollo local
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Instalar dependencias una sola vez:
+
+```bash
+npm install
+```
+
+Levantar frontend (Vite) y backend (Express) juntos:
+
+```bash
+npm run dev:all
+```
+
+Esto abre el sitio en `http://localhost:5173` (o el puerto que Vite indique en consola) y la
+API en `http://localhost:4001`. El panel de administración está en `/admin`.
+
+La primera vez que se levanta el backend, si no configuraste `ADMIN_USER`/`ADMIN_PASSWORD`
+(ver abajo), se crea automáticamente un usuario `admin` con contraseña temporal
+**`cambiar123`** — la consola del backend te lo recuerda. Entrá a `/admin`, iniciá sesión y
+cambiá la contraseña desde "Mi cuenta" antes de publicar el sitio.
+
+## Variables de entorno
+
+Se pueden definir en un archivo `.env` en la raíz del proyecto (no se versiona) o como
+variables de entorno del servidor:
+
+| Variable         | Para qué sirve                                              | Valor por defecto      |
+|------------------|--------------------------------------------------------------|------------------------|
+| `ADMIN_USER`     | Usuario del panel de administración                          | `admin`                |
+| `ADMIN_PASSWORD` | Contraseña inicial del panel (solo se usa la primera vez)     | `cambiar123`           |
+| `JWT_SECRET`     | Clave secreta para firmar la sesión. **Cambiarla en producción** | valor de desarrollo |
+| `PORT`           | Puerto donde escucha el backend                               | `4001`                 |
+
+> Estas variables solo se usan la primera vez que se crea la base de datos
+> (`server/data/db.json`). Si ya la cambiaste desde el panel ("Mi cuenta"), la contraseña
+> queda guardada ahí independientemente de `ADMIN_PASSWORD`.
+
+## Publicar en un servidor (VPS / Node.js)
+
+1. Copiar el proyecto al servidor (o clonar el repositorio) y correr `npm install`.
+2. Definir `JWT_SECRET` (una cadena larga y aleatoria) y opcionalmente `ADMIN_USER` /
+   `ADMIN_PASSWORD` como variables de entorno del servidor.
+3. Generar el build de producción del sitio:
+
+   ```bash
+   npm run build
+   ```
+
+4. Levantar el servidor (sirve la API **y** el sitio ya compilado desde un solo proceso):
+
+   ```bash
+   npm start
+   ```
+
+5. Dejarlo corriendo con un gestor de procesos como PM2 (`pm2 start server/index.js --name osf`)
+   y, si corresponde, poner Nginx/Apache delante como proxy reverso hacia el puerto configurado
+   (`PORT`, por defecto `4001`).
+
+Los datos cargados desde el panel (eventos, textos, imágenes subidas) quedan en
+`server/data/`. Conviene incluir esa carpeta en el backup del servidor.
+
+## Panel de administración
+
+Desde `/admin` se puede:
+
+- **Eventos**: crear, editar y borrar posteos de eventos con imagen, título, subtítulo,
+  descripción, ubicación y fecha.
+- **Contenido del sitio**: editar todos los textos, títulos e imágenes de cada sección de la
+  landing (portada, estadísticas, coberturas, aseguradoras aliadas, sucursales, preguntas
+  frecuentes, pie de página, etc.).
+- **Mi cuenta**: cambiar la contraseña de acceso al panel.

@@ -1,59 +1,23 @@
-import Header from './Components/Header'
-import Footer from './Components/Footer'
-import Banner from './Components/Banner'
-import Coberturas from './Components/Coberturas'
-import Elegirnos from './Components/Elegirnos'
-import Contacto from './Components/Contacto'
-import Monopatin from './Components/Monopatin'
-import Bicicletas from './Components/Bicicletas'
-import OldSchool from './Components/OldSchool'
-import Eventos from './Components/Eventos'
-import Empresas from './Components/Empresas'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { SiteDataProvider } from './content/SiteDataContext'
+import { AuthProvider } from './admin/AuthContext'
+import Landing from './Landing'
+import AdminApp from './admin/AdminApp'
 
 function App() {
   return (
-    <>
-      <Header />
-      <main>
-        <div id="inicio">
-          <Banner />
-        </div>
-        
-        <div>
-          <Monopatin />
-        </div>
-
-        <div>
-          <Bicicletas />
-        </div>
-
-        <div id="coberturas">
-          <Coberturas />
-        </div>
-
-        <div id="oldschool">
-          <OldSchool />
-        </div>
-
-        <div id="elegirnos">
-          <Elegirnos />
-        </div>
-
-        <div id="contacto">
-          <Contacto />
-        </div>
-
-        <div id='eventos'>
-          <Eventos />
-        </div>
-
-        <div id='empresas'>
-          <Empresas />
-        </div>
-
-      </main>
-      <Footer />
-    </>
+    <BrowserRouter>
+      <SiteDataProvider>
+        <Routes>
+          <Route path="/admin/*" element={
+            <AuthProvider>
+              <AdminApp />
+            </AuthProvider>
+          } />
+          <Route path="/*" element={<Landing />} />
+        </Routes>
+      </SiteDataProvider>
+    </BrowserRouter>
   )
 }
 
