@@ -42,6 +42,9 @@ export function defaultAnalytics() {
     clicksByDay: {},
     pageviewsByPath: {},
     clicksByLabel: {},
+    totalDurationSeconds: 0,
+    totalDurationSamples: 0,
+    durationByDay: {},
   }
 }
 
@@ -106,6 +109,13 @@ function load() {
   if (!cache.analytics) {
     cache.analytics = defaultAnalytics()
     migrated = true
+  } else {
+    for (const [key, value] of Object.entries(defaultAnalytics())) {
+      if (!(key in cache.analytics)) {
+        cache.analytics[key] = value
+        migrated = true
+      }
+    }
   }
   if (!cache.content) {
     cache.content = defaultContent

@@ -37,3 +37,11 @@ export function formatPageLabel(path) {
   if (path.startsWith('/admin')) return `Panel de administración (${path})`
   return path
 }
+
+export function formatDuration(totalSeconds) {
+  const seconds = Math.round(totalSeconds || 0)
+  if (seconds < 60) return `${seconds}s`
+  const minutes = Math.floor(seconds / 60)
+  const rest = seconds % 60
+  return `${minutes}m ${rest}s`
+}

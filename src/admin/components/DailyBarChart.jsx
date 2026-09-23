@@ -1,7 +1,8 @@
 // Gráfico de barras simple (sin dependencias) para series diarias { date, value }.
-const DailyBarChart = ({ data, color = '#0B2545', height = 140, emptyLabel = 'Sin datos todavía' }) => {
+const DailyBarChart = ({ data, color = '#0B2545', height = 140, emptyLabel = 'Sin datos todavía', formatValue }) => {
   const max = Math.max(1, ...data.map((d) => d.value))
   const hasData = data.some((d) => d.value > 0)
+  const display = formatValue || ((v) => v)
 
   if (!hasData) {
     return (
@@ -15,7 +16,7 @@ const DailyBarChart = ({ data, color = '#0B2545', height = 140, emptyLabel = 'Si
     <div>
       <div className="flex items-end gap-1" style={{ height }}>
         {data.map((d) => (
-          <div key={d.date} className="flex-1 h-full flex items-end" title={`${d.label}: ${d.value}`}>
+          <div key={d.date} className="flex-1 h-full flex items-end" title={`${d.label}: ${display(d.value)}`}>
             <div
               className="w-full rounded-t transition-all hover:opacity-80"
               style={{ height: `${Math.max(2, (d.value / max) * 100)}%`, backgroundColor: color }}

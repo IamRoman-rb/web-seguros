@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { IconEye, IconClick, IconCalendarStats, IconRefresh } from '@tabler/icons-react'
+import { IconEye, IconClick, IconCalendarStats, IconRefresh, IconClockHour4 } from '@tabler/icons-react'
 import { api } from '../../api'
 import DailyBarChart from '../components/DailyBarChart'
 import HorizontalBarList from '../components/HorizontalBarList'
-import { formatEventLabel, formatPageLabel } from '../analyticsLabels'
+import { formatEventLabel, formatPageLabel, formatDuration } from '../analyticsLabels'
 
 const DAYS_TO_SHOW = 14
 
@@ -25,6 +25,14 @@ function buildSeries(byDay) {
     label,
     value: byDay?.[date] || 0,
   }))
+}
+
+function buildDurationSeries(durationByDay) {
+  return lastNDays(DAYS_TO_SHOW).map(({ date, label }) => {
+    const bucket = durationByDay?.[date]
+    const value = bucket?.samples ? Math.round(bucket.totalSeconds / bucket.samples) : 0
+    return { date, label, value }
+  })
 }
 
 function topEntries(map, formatLabel, limit = 8) {
@@ -78,11 +86,13 @@ const AnalyticsPage = () => {
 
   const pageviewSeries = buildSeries(data.pageviewsByDay)
   const clickSeries = buildSeries(data.clicksByDay)
+  const durationSeries = buildDurationSeries(data.durationByDay)
   const todayKey = new Date().toISOString().slice(0, 10)
   const pageviewsToday = data.pageviewsByDay?.[todayKey] || 0
   const pageviewsWeek = pageviewSeries.slice(-7).reduce((sum, d) => sum + d.value, 0)
   const topPages = topEntries(data.pageviewsByPath, formatPageLabel)
   const topClicks = topEntries(data.clicksByLabel, formatEventLabel)
+  const avgDuration = data.totalDurationSamples ? data.totalDurationSeconds / data.totalDurationSamples : 0
 
   return (
     <div className="max-w-5xl flex flex-col gap-6">
@@ -100,14 +110,15 @@ const AnalyticsPage = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <StatCard icon={IconEye} label="Visitas totales" value={data.totalPageviews || 0} />
         <StatCard icon={IconCalendarStats} label="Visitas hoy" value={pageviewsToday} />
         <StatCard icon={IconCalendarStats} label="Visitas últimos 7 días" value={pageviewsWeek} />
         <StatCard icon={IconClick} label="Clics totales" value={data.totalClicks || 0} />
+        <StatCard icon={IconClockHour4} label="Tiempo promedio en el sitio" value={formatDuration(avgDuration)} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
           <h3 className="font-semibold text-slate-800 mb-4">Visitas por día (últimos {DAYS_TO_SHOW} días)</h3>
           <DailyBarChart data={pageviewSeries} color="#0B2545" />
@@ -115,6 +126,10 @@ const AnalyticsPage = () => {
         <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
           <h3 className="font-semibold text-slate-800 mb-4">Clics por día (últimos {DAYS_TO_SHOW} días)</h3>
           <DailyBarChart data={clickSeries} color="#D90429" />
+        </div>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-5">
+          <h3 className="font-semibold text-slate-800 mb-4">Tiempo promedio por día</h3>
+          <DailyBarChart data={durationSeries} color="#1B998B" formatValue={formatDuration} emptyLabel="Sin datos todavía" />
         </div>
       </div>
 

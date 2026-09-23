@@ -10,9 +10,11 @@ function today() {
   return new Date().toISOString().slice(0, 10)
 }
 
-// Público: cualquier visitante del sitio puede reportar una vista o un click.
+const MAX_DURATION_SECONDS = 6 * 60 * 60 // descarta valores absurdos (pestaña abierta días, relojes manipulados)
+
+// Público: cualquier visitante del sitio puede reportar una vista, un click o el tiempo que estuvo en el sitio.
 router.post('/event', (req, res) => {
-  const { type, path, label } = req.body || {}
+  const { type, path, label, seconds } = req.body || {}
   const day = today()
 
   if (type === 'pageview' && typeof path === 'string' && SAFE_KEY.test(path)) {
@@ -33,6 +35,21 @@ router.post('/event', (req, res) => {
       bumpBoundedCounter(a.clicksByLabel, label)
       a.totalClicks = (a.totalClicks || 0) + 1
       pruneOldDays(a.clicksByDay)
+    })
+    return res.status(204).end()
+  }
+
+  if (type === 'duration' && typeof seconds === 'number' && seconds > 0 && seconds < MAX_DURATION_SECONDS) {
+    const rounded = Math.round(seconds)
+    updateDb((db) => {
+      const a = db.analytics
+      a.totalDurationSeconds = (a.totalDurationSeconds || 0) + rounded
+      a.totalDurationSamples = (a.totalDurationSamples || 0) + 1
+      const bucket = a.durationByDay[day] || { totalSeconds: 0, samples: 0 }
+      bucket.totalSeconds += rounded
+      bucket.samples += 1
+      a.durationByDay[day] = bucket
+      pruneOldDays(a.durationByDay)
     })
     return res.status(204).end()
   }

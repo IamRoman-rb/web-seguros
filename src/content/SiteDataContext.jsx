@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { api } from '../api'
 import { defaultContent } from '../../server/defaultContent.js'
+import { applyThemeColors } from '../utils/color'
 
 const SiteDataContext = createContext(null)
 
@@ -33,6 +34,10 @@ export function SiteDataProvider({ children }) {
     refreshContent()
     refreshEvents()
   }, [refreshContent, refreshEvents])
+
+  useEffect(() => {
+    applyThemeColors(content.theme)
+  }, [content.theme])
 
   const value = useMemo(
     () => ({ content, events, eventsLoaded, refreshContent, refreshEvents }),

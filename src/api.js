@@ -78,3 +78,7 @@ export function trackPageview(path) {
 export function trackClick(label) {
   sendAnalyticsEvent({ type: 'click', label })
 }
+
+export function trackDuration(seconds) {
+  sendAnalyticsEvent({ type: 'duration', seconds })
+}

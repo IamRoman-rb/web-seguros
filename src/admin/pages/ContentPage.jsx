@@ -1,7 +1,8 @@
 import { useSectionDraft } from '../useSectionDraft'
-import SectionShell, { TextField } from '../components/SectionShell'
+import SectionShell, { TextField, ColorField } from '../components/SectionShell'
 import ImageField from '../components/ImageField'
 import ListEditor from '../components/ListEditor'
+import CotizadoresEditor from '../components/CotizadoresEditor'
 
 function Section({ section, title, description, defaultOpen, children }) {
   const { draft, update, save, status, dirty } = useSectionDraft(section)
@@ -29,6 +30,15 @@ const ContentPage = () => {
         )}
       </Section>
 
+      <Section section="theme" title="Colores del sitio" description="Color azul principal y rojo de acento. El resto de los tonos (fondos, hover, etc.) se calculan automáticamente a partir de estos dos.">
+        {(draft, update) => (
+          <>
+            <ColorField label="Azul principal" value={draft.primaryColor} onChange={(v) => update((d) => ({ ...d, primaryColor: v }))} />
+            <ColorField label="Rojo de acento" value={draft.accentColor} onChange={(v) => update((d) => ({ ...d, accentColor: v }))} />
+          </>
+        )}
+      </Section>
+
       <Section section="header" title="Barra superior" description="Mensaje y horario que aparecen arriba del menú">
         {(draft, update) => (
           <>
@@ -51,6 +61,15 @@ const ContentPage = () => {
             <TextField label="Título del destacado (vehículos +20 años)" value={draft.miniHighlightTitle} onChange={(v) => update((d) => ({ ...d, miniHighlightTitle: v }))} />
             <TextField label="Texto del destacado" textarea value={draft.miniHighlightText} onChange={(v) => update((d) => ({ ...d, miniHighlightText: v }))} />
           </>
+        )}
+      </Section>
+
+      <Section section="cotizadores" title="Cotizador Express" description="Tipos de seguro y campos que se muestran en el formulario de cotización rápida de la portada">
+        {(draft, update) => (
+          <CotizadoresEditor
+            categories={draft.categories || []}
+            onChange={(categories) => update((d) => ({ ...d, categories }))}
+          />
         )}
       </Section>
 

@@ -60,4 +60,23 @@ export const TextField = ({ label, value, onChange, textarea = false }) => (
   </div>
 )
 
+export const ColorField = ({ label, value, onChange }) => (
+  <div className="flex flex-col gap-1">
+    <label className="text-sm font-semibold text-slate-700">{label}</label>
+    <div className="flex items-center gap-3">
+      <input
+        type="color"
+        value={value || '#000000'}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-12 h-10 rounded-lg border border-slate-300 cursor-pointer p-0.5 bg-white"
+      />
+      <input
+        className="w-32 rounded-lg border border-slate-300 px-3 py-2 text-sm uppercase focus:outline-none focus:ring-2 focus:ring-primary/30"
+        value={value || ''}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  </div>
+)
+
 export default SectionShell

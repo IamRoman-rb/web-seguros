@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { trackPageview } from './api'
+import { useTrackDuration } from './hooks/useTrackDuration'
 import Header from './Components/Header'
 import Banner from './Components/Banner'
 import TrustBar from './Components/TrustBar'
@@ -19,6 +20,8 @@ function Landing() {
   useEffect(() => {
     trackPageview(window.location.pathname)
   }, [])
+
+  useTrackDuration()
 
   return (
     <>

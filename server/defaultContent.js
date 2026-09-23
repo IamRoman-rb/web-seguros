@@ -3,6 +3,10 @@ export const defaultContent = {
     siteName: 'Organización San Francisco',
     logoUrl: '/logo.png',
   },
+  theme: {
+    primaryColor: '#14335C',
+    accentColor: '#E5484D',
+  },
   header: {
     topbarText: 'Sucursal Las Toninas & Sucursal San Francisco Solano | Atención personalizada',
     topbarHoursText: 'Lunes a Viernes 9:00 a 18:00 hs',
@@ -18,6 +22,58 @@ export const defaultContent = {
     ctaText: 'Cotizar en el acto',
     miniHighlightTitle: '¿Tu auto tiene más de 20 años?',
     miniHighlightText: 'Tenemos convenios especiales para cobertura contra Terceros y Grúa garantizada.',
+  },
+  cotizadores: {
+    categories: [
+      {
+        label: 'Automotor / Camioneta',
+        fields: [
+          { label: 'Marca y Modelo', type: 'text' },
+          { label: 'Año', type: 'text' },
+          { label: 'Tiene GNC', type: 'checkbox' },
+          { label: 'Tiene localizador / GPS', type: 'checkbox' },
+          { label: 'Más de 20 años de antigüedad', type: 'checkbox' },
+        ],
+      },
+      {
+        label: 'Motovehículo',
+        fields: [
+          { label: 'Marca y Modelo', type: 'text' },
+          { label: 'Año', type: 'text' },
+          { label: 'Cilindrada', type: 'text' },
+        ],
+      },
+      {
+        label: 'Hogar',
+        fields: [
+          { label: 'Tipo de vivienda', type: 'select', options: ['Casa', 'Departamento', 'PH'] },
+          { label: '¿Alquilás o es vivienda propia?', type: 'select', options: ['Alquilada', 'Propia'] },
+          { label: 'Está en un barrio cerrado', type: 'checkbox' },
+          { label: 'Cantidad de ambientes', type: 'number' },
+        ],
+      },
+      {
+        label: 'Bicicleta',
+        fields: [
+          { label: 'Marca y Modelo', type: 'text' },
+          { label: 'Valor aproximado', type: 'text' },
+        ],
+      },
+      {
+        label: 'Monopatín Eléctrico',
+        fields: [
+          { label: 'Marca y Modelo', type: 'text' },
+          { label: 'Valor aproximado', type: 'text' },
+        ],
+      },
+      {
+        label: 'Accidentes Personales',
+        fields: [
+          { label: 'Ocupación / Actividad', type: 'text' },
+          { label: 'Cantidad de personas a asegurar', type: 'number' },
+        ],
+      },
+    ],
   },
   trustbar: [
     { value: '+40 años', label: 'De Trayectoria' },
