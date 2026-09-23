@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { trackPageview } from './api'
 import Header from './Components/Header'
 import Banner from './Components/Banner'
 import TrustBar from './Components/TrustBar'
@@ -14,6 +16,10 @@ import Footer from './Components/Footer'
 import FloatingWhatsapp from './Components/FloatingWhatsapp'
 
 function Landing() {
+  useEffect(() => {
+    trackPageview(window.location.pathname)
+  }, [])
+
   return (
     <>
       <Header />

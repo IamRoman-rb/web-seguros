@@ -5,6 +5,8 @@ import {
 } from '@tabler/icons-react'
 import { useSiteData } from '../content/SiteDataContext'
 import { waLink } from '../utils/whatsapp'
+import { slugify } from '../utils/slugify'
+import { trackClick } from '../api'
 
 const Sucursales = () => {
   const { content } = useSiteData()
@@ -74,6 +76,7 @@ const Sucursales = () => {
                   href={waLink(branch.whatsapp, `Hola OSF ${branch.nombre}, quisiera hacer una consulta`)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackClick(`sucursal_whatsapp_${slugify(branch.nombre)}`)}
                   className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 px-space-md rounded-lg bg-surface-subtle hover:bg-surface-container text-primary font-heading text-label-md transition-colors"
                 >
                   <IconBrandWhatsapp size={20} className="text-success-badge" />
@@ -83,6 +86,7 @@ const Sucursales = () => {
                   href={waLink(branch.whatsapp)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackClick(`sucursal_contactar_${slugify(branch.nombre)}`)}
                   className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-lg bg-secondary hover:bg-navy-deep text-on-secondary font-heading text-label-md transition-colors"
                 >
                   Contactar
@@ -111,6 +115,7 @@ const Sucursales = () => {
               href={sucursales.instagramUrl}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackClick('instagram_click')}
               className="inline-flex items-center gap-2 px-space-lg py-3 rounded-lg bg-surface-card hover:bg-surface-container text-navy-deep font-heading text-label-md transition-all flex-shrink-0 shadow"
             >
               Ver Perfil en Instagram

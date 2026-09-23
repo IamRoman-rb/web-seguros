@@ -2,6 +2,7 @@ import { motion as Motion } from 'framer-motion'
 import { IconStars, IconCheck, IconCar, IconShieldCheck } from '@tabler/icons-react'
 import { useSiteData } from '../content/SiteDataContext'
 import { waLink } from '../utils/whatsapp'
+import { trackClick } from '../api'
 
 const VehiculosAntiguos = () => {
   const { content } = useSiteData()
@@ -52,6 +53,7 @@ const VehiculosAntiguos = () => {
                   href={waLink(branch?.whatsapp, 'Hola, quisiera cotizar un auto con más de 20 años de antigüedad.')}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackClick('vehiculos_whatsapp')}
                   className="inline-flex items-center gap-2 px-space-lg py-3 rounded bg-error hover:bg-accent-red-hover text-on-error font-heading text-label-md uppercase tracking-wider transition-all shadow-md"
                 >
                   <IconCar size={20} />

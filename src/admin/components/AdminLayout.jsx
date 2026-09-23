@@ -1,8 +1,9 @@
 import { NavLink, Outlet, useNavigate } from 'react-router-dom'
-import { IconCalendarEvent, IconLayoutDashboard, IconUserCircle, IconLogout, IconExternalLink } from '@tabler/icons-react'
+import { IconCalendarEvent, IconLayoutDashboard, IconUserCircle, IconLogout, IconExternalLink, IconChartBar } from '@tabler/icons-react'
 import { useAuth } from '../AuthContext'
 
 const NAV = [
+  { to: '/admin/estadisticas', label: 'Estadísticas', icon: IconChartBar },
   { to: '/admin/eventos', label: 'Eventos', icon: IconCalendarEvent },
   { to: '/admin/contenido', label: 'Contenido del sitio', icon: IconLayoutDashboard },
   { to: '/admin/cuenta', label: 'Mi cuenta', icon: IconUserCircle },

@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage'
 import EventsPage from './pages/EventsPage'
 import ContentPage from './pages/ContentPage'
 import AccountPage from './pages/AccountPage'
+import AnalyticsPage from './pages/AnalyticsPage'
 
 const AdminApp = () => {
   return (
@@ -17,7 +18,8 @@ const AdminApp = () => {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Navigate to="eventos" replace />} />
+        <Route index element={<Navigate to="estadisticas" replace />} />
+        <Route path="estadisticas" element={<AnalyticsPage />} />
         <Route path="eventos" element={<EventsPage />} />
         <Route path="contenido" element={<ContentPage />} />
         <Route path="cuenta" element={<AccountPage />} />

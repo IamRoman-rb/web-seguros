@@ -50,4 +50,31 @@ export const api = {
   createEvent: (formData) => request('/events', { method: 'POST', body: formData }),
   updateEvent: (id, formData) => request(`/events/${id}`, { method: 'PUT', body: formData }),
   deleteEvent: (id) => request(`/events/${id}`, { method: 'DELETE' }),
+
+  // Analytics
+  getAnalyticsSummary: () => request('/analytics/summary'),
+}
+
+// Envía eventos de analítica sin bloquear ni romper la UI si falla.
+// No usa `request()` a propósito: nunca debe lanzar ni esperar una respuesta.
+function sendAnalyticsEvent(payload) {
+  try {
+    const body = JSON.stringify(payload)
+    const url = `${BASE}/analytics/event`
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url, new Blob([body], { type: 'application/json' }))
+    } else {
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {})
+    }
+  } catch {
+    // La analítica nunca debe romper la experiencia del sitio.
+  }
+}
+
+export function trackPageview(path) {
+  sendAnalyticsEvent({ type: 'pageview', path })
+}
+
+export function trackClick(label) {
+  sendAnalyticsEvent({ type: 'click', label })
 }

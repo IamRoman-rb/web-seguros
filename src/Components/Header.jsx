@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { IconMenu3, IconX, IconBrandWhatsapp, IconArrowRight, IconRosetteDiscountCheck, IconUser } from '@tabler/icons-react'
 import { useSiteData } from '../content/SiteDataContext'
 import { waLink } from '../utils/whatsapp'
+import { trackClick } from '../api'
 
 const NAV_ITEMS = [
   { name: 'Inicio', path: '#inicio' },
@@ -78,6 +79,7 @@ const Header = () => {
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => trackClick('header_whatsapp')}
             className="hidden sm:inline-flex items-center gap-space-xs px-space-md py-2 rounded bg-surface-subtle hover:bg-surface-container text-on-surface font-heading text-label-md transition-all"
           >
             <IconBrandWhatsapp size={18} className="text-success-badge" />
@@ -85,6 +87,7 @@ const Header = () => {
           </a>
           <a
             href="#cotizador-rapido"
+            onClick={() => trackClick('header_cotizar')}
             className="inline-flex items-center gap-space-xs px-space-md py-2.5 rounded bg-error hover:bg-accent-red-hover text-on-error font-heading text-label-md uppercase tracking-wider transition-all shadow-md"
           >
             <span>Cotizar Seguro</span>

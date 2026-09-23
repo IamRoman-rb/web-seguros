@@ -6,6 +6,7 @@ import {
 } from '@tabler/icons-react'
 import { useSiteData } from '../content/SiteDataContext'
 import { waLink } from '../utils/whatsapp'
+import { trackClick } from '../api'
 
 const Banner = () => {
   const { content } = useSiteData()
@@ -29,6 +30,7 @@ const Banner = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    trackClick('cotizador_submit')
     const branch = branches.find((b) => b.nombre === form.sucursal) || branches[0]
     const message = `Hola! Mi nombre es ${form.nombre || 'sin especificar'}. Quisiera cotizar un seguro de: ${form.tipo}. Modelo/Año: ${form.anio || 'no especificado'}. Antigüedad +20 años: ${form.vintage ? 'SÍ' : 'NO'}. Sede preferida: ${form.sucursal}.`
     window.open(waLink(branch?.whatsapp, message), '_blank')
@@ -71,6 +73,7 @@ const Banner = () => {
             <div className="flex flex-wrap items-center gap-space-md mb-space-lg">
               <a
                 href="#cotizador-rapido"
+                onClick={() => trackClick('hero_cotizar')}
                 className="inline-flex items-center gap-2 px-space-lg py-3 rounded bg-error hover:bg-accent-red-hover text-on-error font-heading text-label-md uppercase tracking-wider transition-all shadow-md"
               >
                 <IconCalculator size={20} />
@@ -81,6 +84,7 @@ const Banner = () => {
                   href={waLink(branches[0].whatsapp, 'Hola, quisiera hacer una consulta.')}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackClick('hero_whatsapp')}
                   className="inline-flex items-center gap-2 px-space-lg py-3 rounded bg-white/10 hover:bg-white/20 text-on-primary font-heading text-label-md transition-colors"
                 >
                   <IconBrandWhatsapp size={20} className="text-success-badge" />

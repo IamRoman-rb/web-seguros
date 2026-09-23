@@ -30,6 +30,18 @@ function buildInitialDb() {
     users: [{ username: adminUser, passwordHash }],
     content: defaultContent,
     events: seedEvents(),
+    analytics: defaultAnalytics(),
+  }
+}
+
+export function defaultAnalytics() {
+  return {
+    totalPageviews: 0,
+    totalClicks: 0,
+    pageviewsByDay: {},
+    clicksByDay: {},
+    pageviewsByPath: {},
+    clicksByLabel: {},
   }
 }
 
@@ -85,7 +97,29 @@ function load() {
     console.error('No se pudo leer la base de datos, se reinicia con valores por defecto.', err)
     cache = buildInitialDb()
     save(cache)
+    return cache
   }
+
+  // Migración suave: agrega estructuras nuevas a bases de datos ya existentes
+  // (creadas por una versión anterior del backend) sin pisar sus datos.
+  let migrated = false
+  if (!cache.analytics) {
+    cache.analytics = defaultAnalytics()
+    migrated = true
+  }
+  if (!cache.content) {
+    cache.content = defaultContent
+    migrated = true
+  } else {
+    for (const key of Object.keys(defaultContent)) {
+      if (!(key in cache.content)) {
+        cache.content[key] = defaultContent[key]
+        migrated = true
+      }
+    }
+  }
+  if (migrated) save(cache)
+
   return cache
 }
 
@@ -97,6 +131,29 @@ function save(data) {
 
 export function getDb() {
   return load()
+}
+
+const MAX_TRACKED_DAYS = 90
+const MAX_DISTINCT_KEYS = 200
+const OTHER_KEY = '__other__'
+
+export function pruneOldDays(dayMap) {
+  const cutoff = new Date()
+  cutoff.setDate(cutoff.getDate() - MAX_TRACKED_DAYS)
+  const cutoffStr = cutoff.toISOString().slice(0, 10)
+  for (const day of Object.keys(dayMap)) {
+    if (day < cutoffStr) delete dayMap[day]
+  }
+}
+
+// Evita crecimiento sin límite si alguien manda paths/labels arbitrarios:
+// una vez alcanzado el máximo de claves distintas, lo nuevo se agrupa en "otros".
+export function bumpBoundedCounter(map, key) {
+  if (!(key in map) && Object.keys(map).length >= MAX_DISTINCT_KEYS) {
+    map[OTHER_KEY] = (map[OTHER_KEY] || 0) + 1
+    return
+  }
+  map[key] = (map[key] || 0) + 1
 }
 
 export function updateDb(mutator) {

@@ -8,6 +8,7 @@ import { UPLOADS_DIR } from './db.js'
 import authRoutes from './routes/auth.js'
 import eventsRoutes from './routes/events.js'
 import contentRoutes from './routes/content.js'
+import analyticsRoutes from './routes/analytics.js'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const PORT = process.env.PORT || 4001
@@ -22,6 +23,7 @@ app.use('/uploads', express.static(UPLOADS_DIR, { maxAge: '30d' }))
 app.use('/api/auth', authRoutes)
 app.use('/api/events', eventsRoutes)
 app.use('/api/content', contentRoutes)
+app.use('/api/analytics', analyticsRoutes)
 
 app.use((err, _req, res, next) => {
   if (res.headersSent) return next(err)

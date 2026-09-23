@@ -1,6 +1,8 @@
 import { IconClipboardList, IconBrandWhatsapp } from '@tabler/icons-react'
 import { useSiteData } from '../content/SiteDataContext'
 import { waLink } from '../utils/whatsapp'
+import { slugify } from '../utils/slugify'
+import { trackClick } from '../api'
 
 const FinalCta = () => {
   const { content } = useSiteData()
@@ -26,6 +28,7 @@ const FinalCta = () => {
         <div className="flex flex-wrap items-center justify-center gap-space-md">
           <a
             href="#cotizador-rapido"
+            onClick={() => trackClick('finalcta_cotizar')}
             className="inline-flex items-center gap-2 px-space-xl py-3.5 rounded bg-error hover:bg-accent-red-hover text-on-error font-heading text-label-md uppercase tracking-wider transition-all shadow-xl"
           >
             <IconClipboardList size={20} />
@@ -37,6 +40,7 @@ const FinalCta = () => {
               href={waLink(branch.whatsapp, `Hola, quisiera hablar con un asesor de ${branch.nombre}`)}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackClick(`finalcta_whatsapp_${slugify(branch.nombre)}`)}
               className="inline-flex items-center gap-2 px-space-xl py-3.5 rounded bg-surface-card hover:bg-surface-container text-navy-deep font-heading text-label-md uppercase tracking-wider transition-all shadow-md"
             >
               <IconBrandWhatsapp size={20} className="text-success-badge" />

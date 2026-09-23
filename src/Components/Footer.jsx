@@ -1,6 +1,8 @@
 import { IconShield, IconCamera, IconMapPin, IconPhone, IconMail, IconBrandWhatsapp } from '@tabler/icons-react'
 import { useSiteData } from '../content/SiteDataContext'
 import { waLink } from '../utils/whatsapp'
+import { slugify } from '../utils/slugify'
+import { trackClick } from '../api'
 
 const Footer = () => {
   const { content } = useSiteData()
@@ -27,6 +29,7 @@ const Footer = () => {
                 href={sucursales.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackClick('instagram_click')}
                 className="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white font-heading text-label-sm transition-all"
               >
                 <IconCamera size={16} />
@@ -63,6 +66,7 @@ const Footer = () => {
                   href={waLink(branch.whatsapp)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackClick(`footer_whatsapp_${slugify(branch.nombre)}`)}
                   className="inline-flex w-full items-center justify-center gap-space-xs py-2 px-space-md rounded-lg bg-surface-subtle hover:bg-surface-container text-primary font-heading text-label-md transition-colors"
                 >
                   <IconBrandWhatsapp size={16} className="text-success-badge" />

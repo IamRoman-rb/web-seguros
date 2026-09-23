@@ -6,6 +6,7 @@ import {
   IconArrowRight,
 } from '@tabler/icons-react'
 import { useSiteData } from '../content/SiteDataContext'
+import { trackClick } from '../api'
 
 const ICON_RULES = [
   [/moto(vehículo)?s?\b/i, IconMotorbike],
@@ -75,7 +76,11 @@ const Coberturas = () => {
                   <p className="font-body text-body-sm text-on-surface-variant leading-relaxed">{item.description}</p>
                 </div>
                 <div className="pt-space-sm mt-space-md border-t border-border-subtle flex items-center justify-end">
-                  <a href="#cotizador-rapido" className="font-heading text-label-md text-navy-deep hover:text-error flex items-center gap-1 transition-colors">
+                  <a
+                    href="#cotizador-rapido"
+                    onClick={() => trackClick('coberturas_consultar')}
+                    className="font-heading text-label-md text-navy-deep hover:text-error flex items-center gap-1 transition-colors"
+                  >
                     Consultar <IconArrowRight size={16} />
                   </a>
                 </div>
