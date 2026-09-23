@@ -33,8 +33,8 @@ Esto abre el sitio en `http://localhost:5173` (o el puerto que Vite indique en c
 API en `http://localhost:4001`. El panel de administración está en `/admin`.
 
 La primera vez que se levanta el backend, si no configuraste `ADMIN_USER`/`ADMIN_PASSWORD`
-(ver abajo), se crea automáticamente un usuario `admin` con contraseña temporal
-**`cambiar123`** — la consola del backend te lo recuerda. Entrá a `/admin`, iniciá sesión y
+(ver abajo), se crea automáticamente un usuario `admin` con una contraseña temporal —
+la consola del backend la muestra en ese momento. Entrá a `/admin`, iniciá sesión y
 cambiá la contraseña desde "Mi cuenta" antes de publicar el sitio.
 
 ## Variables de entorno
@@ -42,12 +42,15 @@ cambiá la contraseña desde "Mi cuenta" antes de publicar el sitio.
 Se pueden definir en un archivo `.env` en la raíz del proyecto (no se versiona) o como
 variables de entorno del servidor:
 
-| Variable         | Para qué sirve                                              | Valor por defecto      |
-|------------------|--------------------------------------------------------------|------------------------|
-| `ADMIN_USER`     | Usuario del panel de administración                          | `admin`                |
-| `ADMIN_PASSWORD` | Contraseña inicial del panel (solo se usa la primera vez)     | `cambiar123`           |
-| `JWT_SECRET`     | Clave secreta para firmar la sesión. **Cambiarla en producción** | valor de desarrollo |
-| `PORT`           | Puerto donde escucha el backend                               | `4001`                 |
+| Variable         | Para qué sirve                                              | Si no se define                  |
+|------------------|--------------------------------------------------------------|-----------------------------------|
+| `ADMIN_USER`     | Usuario del panel de administración                          | `admin`                           |
+| `ADMIN_PASSWORD` | Contraseña inicial del panel (solo se usa la primera vez)     | se genera una temporal y se muestra por consola |
+| `JWT_SECRET`     | Clave secreta para firmar la sesión. **Obligatorio definirla en producción** | valor de desarrollo, inseguro |
+| `PORT`           | Puerto donde escucha el backend                               | `4001`                            |
+
+En producción, definí siempre `ADMIN_PASSWORD` y `JWT_SECRET` con valores propios — no dependas
+de los generados automáticamente.
 
 > Estas variables solo se usan la primera vez que se crea la base de datos
 > (`server/data/db.json`). Si ya la cambiaste desde el panel ("Mi cuenta"), la contraseña
