@@ -10,7 +10,7 @@ const HorizontalBarList = ({ data, color = '#0B2545', emptyLabel = 'Sin datos to
     <div className="flex flex-col gap-2.5">
       {data.map((d) => (
         <div key={d.key} className="flex items-center gap-3">
-          <span className="w-40 shrink-0 text-sm text-slate-600 truncate" title={d.label}>
+          <span className="w-24 sm:w-40 shrink-0 text-sm text-slate-600 truncate" title={d.label}>
             {d.label}
           </span>
           <div className="flex-1 bg-slate-100 rounded-full h-3 overflow-hidden">

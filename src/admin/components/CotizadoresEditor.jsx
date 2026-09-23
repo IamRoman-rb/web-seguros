@@ -47,13 +47,13 @@ const CotizadoresEditor = ({ categories, onChange }) => {
             </button>
           </div>
 
-          <div className="pl-6 flex flex-col gap-2">
+          <div className="pl-2 sm:pl-6 flex flex-col gap-2">
             <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">Campos del formulario</p>
             {category.fields.map((field, fieldIndex) => (
               <div key={fieldIndex} className="flex flex-col gap-2 bg-white border border-slate-200 rounded-lg p-3">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                   <input
-                    className={`${inputClass} flex-1 min-w-0`}
+                    className={`${inputClass} w-full sm:flex-1 sm:min-w-0`}
                     placeholder="Etiqueta del campo (ej: Marca y Modelo)"
                     value={field.label}
                     onChange={(e) =>
@@ -63,30 +63,32 @@ const CotizadoresEditor = ({ categories, onChange }) => {
                       }))
                     }
                   />
-                  <select
-                    className={`${inputClass} w-40 flex-shrink-0`}
-                    value={field.type}
-                    onChange={(e) =>
-                      updateCategory(catIndex, (c) => ({
-                        ...c,
-                        fields: c.fields.map((f, i) => (i === fieldIndex ? { ...f, type: e.target.value } : f)),
-                      }))
-                    }
-                  >
-                    {TYPE_OPTIONS.map((t) => (
-                      <option key={t.value} value={t.value}>{t.label}</option>
-                    ))}
-                  </select>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      updateCategory(catIndex, (c) => ({ ...c, fields: c.fields.filter((_, i) => i !== fieldIndex) }))
-                    }
-                    className="text-slate-400 hover:text-red-600 transition-colors flex-shrink-0"
-                    aria-label="Eliminar campo"
-                  >
-                    <IconTrash size={16} />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <select
+                      className={`${inputClass} flex-1 sm:flex-none sm:w-40`}
+                      value={field.type}
+                      onChange={(e) =>
+                        updateCategory(catIndex, (c) => ({
+                          ...c,
+                          fields: c.fields.map((f, i) => (i === fieldIndex ? { ...f, type: e.target.value } : f)),
+                        }))
+                      }
+                    >
+                      {TYPE_OPTIONS.map((t) => (
+                        <option key={t.value} value={t.value}>{t.label}</option>
+                      ))}
+                    </select>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        updateCategory(catIndex, (c) => ({ ...c, fields: c.fields.filter((_, i) => i !== fieldIndex) }))
+                      }
+                      className="text-slate-400 hover:text-red-600 transition-colors flex-shrink-0"
+                      aria-label="Eliminar campo"
+                    >
+                      <IconTrash size={16} />
+                    </button>
+                  </div>
                 </div>
                 {field.type === 'select' && (
                   <input

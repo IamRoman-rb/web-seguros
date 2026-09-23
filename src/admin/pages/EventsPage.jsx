@@ -94,14 +94,14 @@ const EventsPage = () => {
 
   return (
     <div className="max-w-4xl">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h2 className="text-xl font-bold text-slate-800">Eventos</h2>
           <p className="text-slate-500 text-sm">Publicá novedades, torneos y actividades para mostrar en la landing.</p>
         </div>
         <button
           onClick={startCreate}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary hover:bg-navy-deep text-white text-sm font-semibold transition-colors"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-primary hover:bg-navy-deep text-white text-sm font-semibold transition-colors flex-shrink-0"
         >
           <IconPlus size={18} />
           Nuevo evento
